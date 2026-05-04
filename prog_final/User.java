@@ -3,6 +3,7 @@ public abstract class User {
     protected String name;
     protected String username;
     protected String password;
+    
 
     public User(String ID, String name, String username, String password) {
         this.ID = ID;

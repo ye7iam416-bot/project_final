@@ -1,24 +1,23 @@
-import java.util.ArrayList;
 public class Patient extends User {
-    private int age;
-    private String gender;
-    private String phone;
-    private Doctor doctor;
-    private ArrayList<Appointment> appointments;
+     int age;
+    String gender;
+    String assignedDoctor;
+    String phone;
+    String[] appointments = new String[100];
+    int appointmentCount = 0;
 
-    Patient(String ID, String name, String username, String password,int age, String gender, String phone){
-        super(ID, name, username, password);
-        this.age=age;
-        this.gender=gender;
-        this.phone=phone;
-        this.doctor=null;
-        this.appointments= new ArrayList<>();
-    }
-
-    public void setDoctor(Doctor doctor){
-        this.doctor=doctor;
-    }
     
+    public Patient(String ID, String name, String username, String password, int age, String gender,
+            String assignedDoctor, String phone, String[] appointments, int appointmentCount) {
+        super(ID, name, username, password);
+        this.age = age;
+        this.gender = gender;
+        this.assignedDoctor = assignedDoctor;
+        this.phone = phone;
+        this.appointments = appointments;
+        this.appointmentCount = appointmentCount;
+    }
+
     @Override
     public void displayInfo(){
         System.out.println("ID: " + ID);
