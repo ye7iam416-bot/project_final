@@ -29,9 +29,7 @@ public class Patient extends User {
 
     @Override
     public void displayInfo(){
-        System.out.println("ID: " + ID);
-        System.out.println("Name: " + name);
-        System.out.println("Username: " + username);        
+        super.displayInfo();        
         System.out.println("Age: "+age);
         System.out.println("Gender: "+gender);
         System.out.println("Phone number: "+phone);
