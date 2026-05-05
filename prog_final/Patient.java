@@ -53,8 +53,8 @@ public class Patient extends User {
                 Appointment a = appointments[i];
                 System.out.println("ID: "+a.getAppointmentId());
                 System.out.println("Date: "+a.getDate());
-                System.out.println("Time: "+a.getTime());
-                System.out.println("Status: "a.getStatus()); 
+                System.out.println("Time: "+a.getTime()+"\nStatus: "+a.getStatus());
+                
             }
         }
     }
