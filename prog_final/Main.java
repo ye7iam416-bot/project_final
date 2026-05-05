@@ -14,9 +14,8 @@ public class Main {
     }
 
 public static void logIn () {
+    while (true) {
 
-
-           
     System.out.println("====> LOGIN <====");
     System.out.println("1. Admin");
     System.out.println("2. Doctor");
@@ -79,7 +78,7 @@ public static void logIn () {
                 System.out.println("Invalid choice. Please try again.");
             break;
     }
-
+    }
 }
 
 private static void AdminMenu (){
@@ -150,10 +149,7 @@ private static void AdminMenu (){
 }
 
 public static void DoctorMenu (){
-    while (true) {
-        
-    
-
+    while (true) {        
     System.out.println("\n====> Doctor Menu <====");
     System.out.println("1. View My Profile");
     System.out.println("2. View Assugned Patients");
