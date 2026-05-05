@@ -4,7 +4,7 @@ public class Main {
     static Scanner  input = new Scanner(System.in);
     static Admin A1 = new Admin("A001", "Admin Name", "admin", "admin123");
     static Doctor D1 = new Doctor("D001", "Doctor Name", "doctor", "doctor123", "Cardiology", "Heart Department", new String[100], new String[100], 0, 0);
-    static Patient P1 = new Patient("P001", "Patient Name", "patient", "patient123", 30, "Male", "D001", "1234567890", new String[100], 0);
+    static Patient P1 = new Patient("P001", "Patient Name", "patient", "patient123", 25, "Male", "1234567890", "D001", new Appointment[100], 0);
     public static void main(String[] args) {
         logIn();
 
