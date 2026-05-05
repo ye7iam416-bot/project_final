@@ -43,24 +43,30 @@ public static void logIn () {
                  
             break;
         case 2:
-            System.out.print("Doctor ID >>");
-            String doctorID = input.next(); 
-            if (doctorID.equals(D1.getID())) {
-                DoctorMenu();
+            System.out.print("Username Doctor >> ");
+            String doctorUsername = input.next();
+            System.out.print("Password Doctor >> ");
+            String doctorPassword = input.next();
+
+            if (doctorUsername.equals(D1.getUsername()) && doctorPassword.equals(D1.getPassword())) {
+                System.out.println("\nDoctor login successful. Welcome !" );
+                DoctorMenu ();
             } else {
-                System.out.println("Invalid Doctor ID. Please try again.");
-                
+                System.out.println(">> Invalid Doctor details. Please try again.");
             }
-            
+
             break;
         case 3:
-            System.out.print("Patient ID >>");
-            String patientID = input.next(); 
-            if (patientID.equals(P1.getID())) {
-                PatientMenu();
+            System.out.print("Username Patient >> ");
+            String patientUsername = input.next();
+            System.out.print("Password Patient >> ");
+            String patientPassword = input.next();
+
+            if (patientUsername.equals(P1.getUsername()) && patientPassword.equals(P1.getPassword())) {
+                System.out.println("\nPatient login successful. Welcome !" );
+                PatientMenu ();
             } else {
-                System.out.println("Invalid Patient ID. Please try again.");
-                
+                System.out.println(">> Invalid Patient details. Please try again.");
             }
             
             break;
@@ -149,26 +155,7 @@ public static void DoctorMenu (){
 }
 
 public static void PatientMenu (){
-
-
-
-}
-
-public static void log_Admin (){
-
-
-}
-
-
-public static void log_Doctor (){
-
-
-}
-
-
-public static void log_Patient (){
-
-
+    
 }
 
 }
