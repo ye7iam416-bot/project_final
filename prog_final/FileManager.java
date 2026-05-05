@@ -87,22 +87,22 @@ public class FileManager {
     }
 
     // delete appo
-    public void deleteAppointment(String id) {
+  public void deleteAppointment(String id) {
+    String[] temp = new String[size];
+    int newCount = 0;
 
-        String[] temp = new String[size];
-        int newCount = 0;
-
-        for (int i = 0; i < aCount; i++) {
-            if (!appointments[i].startsWith(id)) {
-                temp[newCount++] = appointments[i];
-            }
+    for (int i = 0; i < aCount; i++) {
+        // نقوم بتقسيم السطر بناءً على الفاصلة
+        String[] parts = appointments[i].split(",");
+        if (!parts[0].equals(id)) {
+            temp[newCount++] = appointments[i];
         }
-
-        appointments = temp;
-        aCount = newCount;
-
-        saveFile("appointments.txt", appointments, aCount);
     }
+    appointments = temp;
+    aCount = newCount;
+
+    saveFile("appointments.txt", appointments, aCount);
+}
 
     // login
     public boolean login(String username, String password) {
@@ -118,4 +118,26 @@ public class FileManager {
 
         return false;
     }
+    public void updateAppointmentStatus(String id, String newStatus) {
+    for (int i = 0; i < aCount; i++) {
+        String[] parts = appointments[i].split(",");
+        
+        if (parts[0].equals(id)) {
+            String currentStatus = parts[5];
+
+            if (currentStatus.equalsIgnoreCase("cancelled") && newStatus.equalsIgnoreCase("completed")) {
+                System.out.println("Error: A cancelled appointment cannot be marked as completed.");
+                return;
+            }
+            appointments[i] = parts[0] + "," + parts[1] + "," + parts[2] + "," 
+                            + parts[3] + "," + parts[4] + "," + newStatus;
+            
+            
+            saveFile("appointments.txt", appointments, aCount);
+            System.out.println("Appointment status updated to: " + newStatus);
+            return;
+        }
+    }
+    System.out.println("Appointment ID not found.");
+}
 }

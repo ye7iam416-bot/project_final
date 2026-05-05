@@ -88,18 +88,20 @@ public static Appointment createAppointment(String id, String patientId, String 
 
     return true;
 }
-//================================================
-
+//========================================
 public void updateStatus(String newStatus) {
-
-    if (this.status.equals("cancelled") && newStatus.equals("completed")) {
-        System.out.println("Cancelled appointment can't be completed");
-        return;
+    String formattedNewStatus = newStatus.toLowerCase();
+    String currentStatus = this.status.toLowerCase();
+    if (currentStatus.equals("cancelled") && formattedNewStatus.equals("completed")) {
+        System.out.println("Error: A cancelled appointment cannot be marked as completed.");
+        
+        return; 
     }
 
+    
     this.status = newStatus;
+    System.out.println("Status updated successfully to: " + newStatus);
 }
-//========================================
 
 public String toFileString() {
     return appointmentId + "," + patientId + "," + doctorId + ","
