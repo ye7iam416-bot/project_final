@@ -3,7 +3,7 @@ public class Patient extends User {
     private String gender;
     private String assignedDoctor;
     private String phone;
-    private Appointment[] appointments = new Appointment[10];
+    private Appointment[] appointments = new Appointment[100];
     private int appointmentCount = 0;
     
 
