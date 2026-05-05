@@ -14,9 +14,8 @@ public class Main {
     }
 
 public static void logIn () {
+    while (true) {
 
-
-           
     System.out.println("====> LOGIN <====");
     System.out.println("1. Admin");
     System.out.println("2. Doctor");
@@ -79,7 +78,7 @@ public static void logIn () {
                 System.out.println("Invalid choice. Please try again.");
             break;
     }
-
+    }
 }
 
 private static void AdminMenu (){
@@ -140,7 +139,7 @@ private static void AdminMenu (){
                 break;
             case 12:
                 
-                break;
+                return;
         
             default:
                 break;
@@ -150,12 +149,76 @@ private static void AdminMenu (){
 }
 
 public static void DoctorMenu (){
-
+    while (true) {        
+    System.out.println("\n====> Doctor Menu <====");
+    System.out.println("1. View My Profile");
+    System.out.println("2. View Assugned Patients");
+    System.out.println("3. View My Appointments");
+    System.out.println("4. Update Appointment Status");
+    System.out.println("5. Log Out");
+    System.out.print(">> Choose : ");
+    int choise = input.nextInt();
+    switch (choise) {
+        case 1:
+            
+            break;
+        case 2:
+            
+            break;
+        case 3:
+            
+            break;
+        case 4:
+            
+            break;
+        case 5:
+            
+            return;
+    
+        default:
+            break;
+    }
+    }
 
 }
 
 public static void PatientMenu (){
+    while (true) {
+    System.out.println("\n====> Patient Menu <====");
+    System.out.println("1. View My Profile");
+    System.out.println("2. View Assigned Doctor");
+    System.out.println("3. View My Appointments");
+    System.out.println("4. Book Appointment");
+    System.out.println("5. Cancel Appointment");
+    System.out.println("6. Log Out");
+    System.out.print(">> Choose : ");
+    int choise = input.nextInt();
+    switch (choise) {
+        case 1:
+            
+            break;
+        case 2:
+            
+            break;
+        case 3:
+            
+            break;
+        case 4:
+            
+            break;
+        case 5:
+            
+            break;
+        case 6:
+            
+            return;
     
+        default:
+            break;
+    }
+    
+}
+
 }
 
 }
