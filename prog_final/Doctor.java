@@ -39,6 +39,17 @@ public void displayInfo() {
     }
   
    }
+public void viewAssignedPatients() {
+    if (patientCount == 0) {
+        System.out.println("No patients assigned to Dr. " + name);
+    } else {
+        System.out.println("Assigned Patients for Dr. " + name + " :");
+        for (int i = 0; i < patientCount; i++) {
+            System.out.println((i + 1) + ". Patient ID: " + assignedPatients[i]);
+        }
+        System.out.println("Total patients: " + patientCount);
+    }
+}
     
 
 
