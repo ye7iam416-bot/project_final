@@ -2,19 +2,29 @@ public class Doctor extends User {
     String specialization;
     String department;
     String phonenumber;
+    String status;
     Patient[] assignedPatients = new Patient[100];// array ثابت
    Appointment[] appointments = new Appointment[100];
     int patientCount = 0;
     int appointmentCount = 0;
     
     public Doctor(String ID, String name, String username, String password, String specialization, String department,String phonenumber,
-            Patient[] assignedPatients,Appointment[] appointments, int patientCount, int appointmentCount) {
+         String status,Patient[] assignedPatients,Appointment[] appointments, int patientCount, int appointmentCount) {
         super(ID, name, username, password);
         this.specialization = specialization;
         this.department = department;
         this.phonenumber =phonenumber;
+         this.status = status;
         this.patientCount = patientCount;
         this.appointmentCount = appointmentCount;
+    }
+
+    public void setStatus(String s){
+        this.status = s;
+    }
+
+    public String getStatus(){
+        return status;
     }
     @Override
        public void displayInfo() {
