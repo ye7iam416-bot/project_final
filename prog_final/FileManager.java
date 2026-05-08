@@ -3,141 +3,204 @@ import java.util.Scanner;
 
 public class FileManager {
 
-    private final int size = 100;
-
-    private String[] doctors = new String[size];
-    private String[] patients = new String[size];
-    private String[] appointments = new String[size];
-    private String[] users = new String[size];
-
-    private int dCount = 0;
-    private int pCount = 0;
-    private int aCount = 0;
-    private int uCount = 0;
-
-    //load files
-    public void loadAll() {
-        loadFile("doctors.txt", 1);
-        loadFile("patients.txt", 2);
-        loadFile("appointments.txt", 3);
-        loadFile("users.txt", 4);
-    }
-    private void loadFile(String fileName, int type) {
+    // ================= DOCTORS =================
+    public static void saveDoctors(Doctor[] doctors, int count) {
         try {
-            File file = new File(fileName);
+            PrintWriter writer = new PrintWriter(new FileWriter("doctors.txt"));
+
+            for (int i = 0; i < count; i++) {
+                if (doctors[i] != null) {
+                    writer.println(
+                            doctors[i].getId() + "," +
+                            doctors[i].getName() + "," +
+                            doctors[i].getUsername() + "," +
+                            doctors[i].getPassword() + "," +
+                            doctors[i].getPhone() + "," +
+                            doctors[i].getSpecialization() + "," +
+                            doctors[i].getDepartment()
+                    );
+                }
+            }
+
+            writer.close();
+
+        } catch (Exception e) {
+            System.out.println("Error saving doctors file.");
+        }
+    }
+
+    public static int loadDoctors(Doctor[] doctors) {
+        int count = 0;
+
+        try {
+            File file = new File("doctors.txt");
 
             if (!file.exists()) {
                 file.createNewFile();
-                return;
+                return 0;
             }
 
-            Scanner sc = new Scanner(file);
+            Scanner read = new Scanner(file);
 
-            while (sc.hasNextLine()) {
-                String line = sc.nextLine();
+            while (read.hasNextLine()) {
 
-                if (type == 1) doctors[dCount++] = line;
-                if (type == 2) patients[pCount++] = line;
-                if (type == 3) appointments[aCount++] = line;
-                if (type == 4) users[uCount++] = line;
+                String line = read.nextLine();
+
+                if (line.isEmpty()) continue;
+
+                String[] data = line.split(",");
+
+                doctors[count++] = new Doctor(
+                        data[0], data[1], data[2],
+                        data[3], data[4],
+                        data[5], data[6]
+                );
             }
 
-            sc.close();
+            read.close();
 
         } catch (Exception e) {
-            System.out.println("Error loading " + fileName);
+            System.out.println("Error loading doctors file.");
         }
+
+        return count;
     }
 
-    // save file
-    private void saveFile(String fileName, String[] arr, int count) {
+    // ================= PATIENTS =================
+    public static void savePatients(Patient[] patients, int count) {
         try {
-            FileWriter fw = new FileWriter(fileName);
+            PrintWriter writer = new PrintWriter(new FileWriter("patients.txt"));
 
             for (int i = 0; i < count; i++) {
-                fw.write(arr[i] + "\n");
+                if (patients[i] != null) {
+                    writer.println(
+                            patients[i].getId() + "," +
+                            patients[i].getName() + "," +
+                            patients[i].getUsername() + "," +
+                            patients[i].getPassword() + "," +
+                            patients[i].getPhone() + "," +
+                            patients[i].getAge() + "," +
+                            patients[i].getGender()
+                    );
+                }
             }
 
-            fw.close();
+            writer.close();
 
         } catch (Exception e) {
-            System.out.println("Error saving " + fileName);
+            System.out.println("Error saving patients file.");
         }
     }
 
-    //add
-    public void addDoctor(String d) {
-        doctors[dCount++] = d;
-        saveFile("doctors.txt", doctors, dCount);
-    }
+    public static int loadPatients(Patient[] patients) {
+        int count = 0;
 
-    public void addPatient(String p) {
-        patients[pCount++] = p;
-        saveFile("patients.txt", patients, pCount);
-    }
+        try {
+            File file = new File("patients.txt");
 
-    public void addAppointment(String a) {
-        appointments[aCount++] = a;
-        saveFile("appointments.txt", appointments, aCount);
-    }
-
-    public void addUser(String u) {
-        users[uCount++] = u;
-        saveFile("users.txt", users, uCount);
-    }
-
-    // delete appo
-  public void deleteAppointment(String id) {
-    String[] temp = new String[size];
-    int newCount = 0;
-
-    for (int i = 0; i < aCount; i++) {
-        // نقوم بتقسيم السطر بناءً على الفاصلة
-        String[] parts = appointments[i].split(",");
-        if (!parts[0].equals(id)) {
-            temp[newCount++] = appointments[i];
-        }
-    }
-    appointments = temp;
-    aCount = newCount;
-
-    saveFile("appointments.txt", appointments, aCount);
-}
-
-    // login
-    public boolean login(String username, String password) {
-
-        for (int i = 0; i < uCount; i++) {
-
-            String[] parts = users[i].split(",");
-
-            if (parts[0].equals(username) && parts[1].equals(password)) {
-                return true;
+            if (!file.exists()) {
+                file.createNewFile();
+                return 0;
             }
-        }
 
-        return false;
-    }
-    public void updateAppointmentStatus(String id, String newStatus) {
-    for (int i = 0; i < aCount; i++) {
-        String[] parts = appointments[i].split(",");
-        
-        if (parts[0].equals(id)) {
-            String currentStatus = parts[5];
+            Scanner read = new Scanner(file);
 
-            if (currentStatus.equalsIgnoreCase("cancelled") && newStatus.equalsIgnoreCase("completed")) {
-                System.out.println("Error: A cancelled appointment cannot be marked as completed.");
-                return;
+            while (read.hasNextLine()) {
+
+                String line = read.nextLine();
+
+                if (line.isEmpty()) continue;
+
+                String[] data = line.split(",");
+
+                patients[count++] = new Patient(
+                        data[0], data[1], data[2],
+                        data[3], data[4],
+                        Integer.parseInt(data[5]),
+                        data[6]
+                );
             }
-            appointments[i] = parts[0] + "," + parts[1] + "," + parts[2] + "," 
-                            + parts[3] + "," + parts[4] + "," + newStatus;
-            
-            
-            saveFile("appointments.txt", appointments, aCount);
-            System.out.println("Appointment status updated to: " + newStatus);
-            return;
+
+            read.close();
+
+        } catch (Exception e) {
+            System.out.println("Error loading patients file.");
+        }
+
+        return count;
+    }
+
+    // ================= APPOINTMENTS =================
+    public static void saveAppointments(Appointment[] appointments, int count) {
+        try {
+            PrintWriter writer = new PrintWriter(new FileWriter("appointments.txt"));
+
+            for (int i = 0; i < count; i++) {
+                if (appointments[i] != null) {
+                    writer.println(
+                            appointments[i].getAppointmentId() + "," +
+                            appointments[i].getPatientId() + "," +
+                            appointments[i].getDoctorId() + "," +
+                            appointments[i].getDate() + "," +
+                            appointments[i].getTime() + "," +
+                            appointments[i].getStatus()
+                    );
+                }
+            }
+
+            writer.close();
+
+        } catch (Exception e) {
+            System.out.println("Error saving appointments file.");
         }
     }
-    System.out.println("Appointment ID not found.");
-}
+
+    public static int loadAppointments(Appointment[] appointments) {
+        int count = 0;
+
+        try {
+            File file = new File("appointments.txt");
+
+            if (!file.exists()) {
+                file.createNewFile();
+                return 0;
+            }
+
+            Scanner read = new Scanner(file);
+
+            while (read.hasNextLine()) {
+
+                String line = read.nextLine();
+
+                if (line.isEmpty()) continue;
+
+                String[] data = line.split(",");
+
+                appointments[count++] = new Appointment(
+                        data[0], data[1], data[2],
+                        data[3], data[4], data[5]
+                );
+            }
+
+            read.close();
+
+        } catch (Exception e) {
+            System.out.println("Error loading appointments file.");
+        }
+
+        return count;
+    }
+
+    // ================= UPDATE HELPERS =================
+    public static void updateAppointmentsFile(Appointment[] appointments, int count) {
+        saveAppointments(appointments, count);
+    }
+
+    public static void updateDoctorsFile(Doctor[] doctors, int count) {
+        saveDoctors(doctors, count);
+    }
+
+    public static void updatePatientsFile(Patient[] patients, int count) {
+        savePatients(patients, count);
+    }
 }

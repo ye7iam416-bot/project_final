@@ -1,97 +1,215 @@
 public class Patient extends User {
+
     private int age;
     private String gender;
-    private String assignedDoctor;
-    private String phone;
+    private Doctor assignedDoctor;
     private Appointment[] appointments = new Appointment[100];
     private int appointmentCount = 0;
-    
 
-    
-    public Patient(String ID, String name, String username, String password, int age, String gender,
-            String assignedDoctor, String phone, Appointment[] appointments, int appointmentCount) {
-        super(ID, name, username, password);
-        this.age = age;
-        this.gender = gender;
-        this.assignedDoctor = assignedDoctor;
-        this.phone = phone;
-        this.appointments = appointments;
-        this.appointmentCount = appointmentCount;
+    public Patient() {
     }
 
-    public int getAge(){
+    public Patient(String id, String name, String username,
+            String password, String phone,
+            int age, String gender) {
+
+        super(id, name, username, password, phone);
+
+        this.age = age;
+        this.gender = gender;
+    }
+
+    public int getAge() {
         return age;
     }
 
-    public String getgender(){
+    public String getGender() {
         return gender;
     }
 
-    @Override
-    public void displayInfo(){
-        super.displayInfo();        
-        System.out.println("Age: "+age);
-        System.out.println("Gender: "+gender);
-        System.out.println("Phone number: "+phone);
+    public Doctor getAssignedDoctor() {
+        return assignedDoctor;
     }
 
-    public void viewDoctor(){
-        if (assignedDoctor!=null) {
-            System.out.println("Assigned Dotor: "+assignedDoctor);
-        }else{
-            System.out.println("No Doctor assigned");
+    public Appointment[] getAppointments() {
+        return appointments;
+    }
+
+    public int getAppointmentCount() {
+        return appointmentCount;
+    }
+
+    public void setAge(int age) {
+
+        if (age <= 0 || age >= 120) {
+
+            System.out.println("Invalid age.");
+            return;
+        }
+
+        this.age = age;
+    }
+
+    public void setGender(String gender) {
+
+        if (gender == null || gender.equals("")) {
+
+            System.out.println("Gender cannot be empty.");
+            return;
+        }
+
+        this.gender = gender;
+    }
+
+    public void setAssignedDoctor(Doctor assignedDoctor) {
+
+        if (assignedDoctor == null) {
+
+            System.out.println("Invalid doctor.");
+            return;
+        }
+
+        this.assignedDoctor = assignedDoctor;
+    }
+
+    @Override
+    public void displayInfo() {
+
+        System.out.println("===== Patient Info =====");
+
+        System.out.println("Patient ID: " + id);
+        System.out.println("Name: " + name);
+        System.out.println("Username: " + username);
+        System.out.println("Phone: " + phone);
+        System.out.println("Age: " + age);
+        System.out.println("Gender: " + gender);
+
+        if (assignedDoctor != null) {
+
+            System.out.println("Assigned Doctor: "
+                    + assignedDoctor.getName());
+        } else {
+
+            System.out.println("Assigned Doctor: None");
         }
     }
 
-    public void viewAppointment(){
-        if (appointmentCount==0) {
-            System.out.println("No appointment");
-        }else{
-            for(int i=0;i<appointmentCount;i++){
-                Appointment a = appointments[i];
-                System.out.println("ID: "+a.getAppointmentId());
-                System.out.println("Date: "+a.getDate());
-                System.out.println("Time: "+a.getTime()+"\nStatus: "+a.getStatus());
-                
+    public void viewDoctor() {
+
+        if (assignedDoctor == null) {
+
+            System.out.println("No doctor assigned.");
+            return;
+        }
+
+        System.out.println("===== Assigned Doctor =====");
+
+        assignedDoctor.displayInfo();
+    }
+
+   public boolean addAppointment(Appointment appointment) {
+    if (appointment == null) {
+        System.out.println("Invalid appointment.");
+        return false;
+    }
+
+    for (int i = 0; i < appointmentCount; i++) {
+        if (appointments[i].getAppointmentId()
+                .equals(appointment.getAppointmentId())) {
+            System.out.println("Appointment already exists.");
+            return false;
+        }
+    }
+
+    if (appointmentCount >= appointments.length) {
+        System.out.println("Appointment list is full.");
+        return false;
+    }
+
+    appointments[appointmentCount++] = appointment;
+    return true;
+}
+public int bookAppointment(Appointment[] appointments,
+                           int appointmentCount,
+                           String appointmentId,
+                           String patientId,
+                           String doctorId,
+                           String date,
+                           String time,
+                           String status) {
+
+    if (assignedDoctor == null) {
+        System.out.println("Patient must be assigned to a doctor first.");
+        return appointmentCount;
+    }
+
+    Appointment appointment = new Appointment(
+            appointmentId,
+            patientId,
+            doctorId,
+            date,
+            time,
+            status
+    );
+
+    // add to system
+    appointments[appointmentCount] = appointment;
+
+    // add to patient
+    addAppointment(appointment);
+
+    // add to doctor
+    assignedDoctor.addAppointment(appointment);
+
+    System.out.println("Appointment booked successfully.");
+
+    return appointmentCount + 1;
+}
+    // view appointments
+    public void viewAppointments() {
+
+        System.out.println("===== My Appointments =====");
+
+        if (appointmentCount == 0) {
+
+            System.out.println("No appointments.");
+            return;
+        }
+
+        for (int i = 0; i < appointmentCount; i++) {
+
+            appointments[i].displayAppointment();
+
+            System.out.println();
+        }
+    }
+
+    // cancel appointment
+    public void cancelAppointment(String appointmentId) {
+
+        for (int i = 0; i < appointmentCount; i++) {
+
+            if (appointments[i].getAppointmentId()
+                    .equals(appointmentId)) {
+
+                if (appointments[i].getStatus()
+                        .equalsIgnoreCase("Completed")) {
+
+                    System.out.println("Completed appointment cannot be cancelled.");
+                    return;
+                }
+
+                appointments[i].setStatus("Cancelled");
+                for (int j = i; j < appointmentCount - 1; j++) {
+                    appointments[j] = appointments[j + 1];
+                }
+                appointments[--appointmentCount] = null;
+                System.out.println("Appointment cancelled successfully.");
+
+                return;
             }
         }
+
+        System.out.println("Appointment not found.");
     }
-
-    public void bookAppointment(String appointmentId,String date,String time){
-        
-        if (assignedDoctor==null) {
-            System.out.println("No doctor assigned");
-            return;
-        }
-
-        if (appointmentCount==appointments.length) {
-            System.out.println("List is full");
-            return;
-        }
-
-        if (!Appointment.isDoctorAvailable(appointments, appointmentId, date, time)) {
-            System.out.println("Doctor not available at this time");
-            return;
-        }
-
-        Appointment ap = Appointment.createAppointment(appointmentId, time, appointmentId, date, time);
-
-        if (ap!=null) {
-            appointments[appointmentCount] = ap;
-            appointmentCount++;
-            System.out.println("Appointment booked");
-        }
-    }
-
-    public void cancelAppointment(int index){
-        if (index<0 || index>appointmentCount) {
-            System.out.println("Invalid appointment");
-            return;
-        }
-        appointments[index].updateStatus("Cancelled");
-        System.out.println("Appontment Cancelled");
-    }
-
-
-
 }

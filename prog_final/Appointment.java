@@ -5,106 +5,116 @@ public class Appointment {
     private String date;
     private String time;
     private String status;
-
-
-    public Appointment(String appointmentId, String patientId, String doctorId, String date, String time,
-            String status) {
+    public Appointment() {
+    
+    }
+    public Appointment(String appointmentId,String patientId,String doctorId,
+                       String date,String time,String status) {
         this.appointmentId = appointmentId;
         this.patientId = patientId;
         this.doctorId = doctorId;
-        this.date = date;
-        this.time = time;
+
+        if (date == null || date.equals("")) {
+            System.out.println("Appointment date cannot be empty.");
+            this.date = "Unknown";
+        }
+        else {
+
+            this.date = date;
+        }
+        if (time == null || time.equals("")) {
+            System.out.println("Appointment time cannot be empty.");
+            this.time = "Unknown";
+        }
+        else {
+
+            this.time = time;
+        }
         this.status = status;
     }
-
-
     public String getAppointmentId() {
         return appointmentId;
     }
-
 
     public String getPatientId() {
         return patientId;
     }
 
-
     public String getDoctorId() {
         return doctorId;
     }
-
 
     public String getDate() {
         return date;
     }
 
-
     public String getTime() {
         return time;
     }
 
-
     public String getStatus() {
         return status;
     }
-//=====================================================    
-public static Appointment createAppointment(String id, String patientId, String doctorId,
-    String date, String time) {
 
-    if (doctorId == null || doctorId.isEmpty()) {
-        System.out.println("Patient must be assigned to a doctor first");
-        return null;
+    public void setAppointmentId(String appointmentId) {
+        this.appointmentId = appointmentId;
     }
 
-    if (date == null || date.isEmpty()) {
-        System.out.println("Date can't be empty");
-        return null;
+    public void setPatientId(String patientId) {
+        this.patientId = patientId;
     }
 
-    if (time == null || time.isEmpty()) {
-        System.out.println("Time can't be empty");
-        return null;
+    public void setDoctorId(String doctorId) {
+        this.doctorId = doctorId;
     }
 
-    return new Appointment(id, patientId, doctorId, date, time, "confirmed");
-}
-    // ================================
-    
-    public static boolean isDoctorAvailable(Appointment[] arr_Doc_avb,
-    String doctorId, String date, String time) {
+    public void setDate(String date) {
 
-    for (int i = 0; i < arr_Doc_avb.length; i++) {
+        if (date == null || date.equals("")) {
 
-        Appointment a = arr_Doc_avb[i];
-        if (a == null) continue;
-
-        if (a.getDoctorId().equals(doctorId)
-                && a.getDate().equals(date)
-                && a.getTime().equals(time)
-                && !a.getStatus().equals("cancelled")) {
-
-            return false;
+            System.out.println("Date cannot be empty.");
+            return;
         }
+
+        this.date = date;
     }
 
-    return true;
-}
-//========================================
-public void updateStatus(String newStatus) {
-    String formattedNewStatus = newStatus.toLowerCase();
-    String currentStatus = this.status.toLowerCase();
-    if (currentStatus.equals("cancelled") && formattedNewStatus.equals("completed")) {
-        System.out.println("Error: A cancelled appointment cannot be marked as completed.");
-        
-        return; 
+    public void setTime(String time) {
+
+        if (time == null || time.equals("")) {
+
+            System.out.println("Time cannot be empty.");
+            return;
+        }
+
+        this.time = time;
     }
 
+    public void setStatus(String status) {
+
+        if (this.status != null &&
+                this.status.equalsIgnoreCase("Cancelled") &&
+                status.equalsIgnoreCase("Completed")) {
+
+            System.out.println("Cancelled appointment cannot be completed.");
+            return;
+        }
+        this.status = status;
+    }
     
-    this.status = newStatus;
-    System.out.println("Status updated successfully to: " + newStatus);
-}
+    public void displayAppointment() {
 
-public String toFileString() {
-    return appointmentId + "," + patientId + "," + doctorId + ","
-            + date + "," + time + "," + status;
-}
+        System.out.println("===== Appointment =====");
+
+        System.out.println("Appointment ID: " + appointmentId);
+        System.out.println("Patient ID: " + patientId);
+        System.out.println("Doctor ID: " + doctorId);
+
+        System.out.println("Date: " + date);
+        System.out.println("Time: " + time);
+
+        System.out.println("Status: " + status);
+
+    }
+
 }
