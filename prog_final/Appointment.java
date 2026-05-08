@@ -1,37 +1,26 @@
 public class Appointment {
+
     private String appointmentId;
     private String patientId;
     private String doctorId;
     private String date;
     private String time;
     private String status;
+
     public Appointment() {
-    
+
     }
-    public Appointment(String appointmentId,String patientId,String doctorId,
-                       String date,String time,String status) {
+
+    public Appointment(String appointmentId, String patientId,String doctorId,String date,
+String time, String status) {
         this.appointmentId = appointmentId;
         this.patientId = patientId;
         this.doctorId = doctorId;
-
-        if (date == null || date.equals("")) {
-            System.out.println("Appointment date cannot be empty.");
-            this.date = "Unknown";
-        }
-        else {
-
-            this.date = date;
-        }
-        if (time == null || time.equals("")) {
-            System.out.println("Appointment time cannot be empty.");
-            this.time = "Unknown";
-        }
-        else {
-
-            this.time = time;
-        }
-        this.status = status;
+        setDate(date);
+        setTime(time);
+        setStatus(status);
     }
+
     public String getAppointmentId() {
         return appointmentId;
     }
@@ -67,30 +56,29 @@ public class Appointment {
     public void setDoctorId(String doctorId) {
         this.doctorId = doctorId;
     }
-
     public void setDate(String date) {
-
-        if (date == null || date.equals("")) {
-
-            System.out.println("Date cannot be empty.");
+        if (date == null || date.trim().equals("")) {
+           System.out.println("Appointment date cannot be empty.");
             return;
         }
-
-        this.date = date;
+      this.date = date;
     }
 
     public void setTime(String time) {
-
-        if (time == null || time.equals("")) {
-
-            System.out.println("Time cannot be empty.");
+        if (time == null || time.trim().equals("")) {
+            System.out.println("Appointment time cannot be empty.");
             return;
         }
-
         this.time = time;
     }
-
     public void setStatus(String status) {
+        if (!(status.equalsIgnoreCase("Confirmed") ||
+                status.equalsIgnoreCase("Completed") ||
+                status.equalsIgnoreCase("Cancelled"))) {
+
+            System.out.println("Invalid appointment status.");
+            return;
+        }
 
         if (this.status != null &&
                 this.status.equalsIgnoreCase("Cancelled") &&
@@ -101,20 +89,13 @@ public class Appointment {
         }
         this.status = status;
     }
-    
     public void displayAppointment() {
-
         System.out.println("===== Appointment =====");
-
         System.out.println("Appointment ID: " + appointmentId);
         System.out.println("Patient ID: " + patientId);
         System.out.println("Doctor ID: " + doctorId);
-
         System.out.println("Date: " + date);
         System.out.println("Time: " + time);
-
         System.out.println("Status: " + status);
-
     }
-
 }

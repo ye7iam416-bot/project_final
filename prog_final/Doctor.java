@@ -1,6 +1,7 @@
 public class Doctor extends User {
     private String specialization;
     private String department;
+    private Patient[] patients = new Patient[100];
     private int patientCount = 0;
     private Appointment[] appointments = new Appointment[100];
     private int appointmentCount = 0;
@@ -48,86 +49,82 @@ public class Doctor extends User {
         System.out.println("Specialization: " + specialization);
         System.out.println("Department: " + department);
     }
-    // ================= ADD PATIENT =================
+
 public void addPatient(Patient patient) {
-    if (patient == null) return;
-    patientCount++;
+    if (patient == null) {
+        return;
+    }
+    if (patientCount >= patients.length) {
+        System.out.println("Patients list full.");
+        return;
+    }
+    patients[patientCount++] = patient;
 }
 
-// ================= ADD APPOINTMENT =================
 public void addAppointment(Appointment appointment) {
 
     if (appointment == null) return;
 
     if (appointmentCount >= appointments.length) {
+
         System.out.println("Appointments full.");
-        return;
-    }
-
-    appointments[appointmentCount++] = appointment;
-}
-
-
-    public void viewPatients(Patient[] patients, int patientCount) {
-
-    System.out.println("===== My Patients =====");
-
-    if (patientCount == 0) {
-        System.out.println("No patients.");
-        return;
-    }
-
-    boolean found = false;
-
-    for (int i = 0; i < patientCount; i++) {
-
-        if (patients[i] != null &&
-            patients[i].getAssignedDoctor() == this) {
-
-            patients[i].displayInfo();
-            System.out.println("-------------------");
-
-            found = true;
-        }
-    }
-
-    if (!found) {
-        System.out.println("No assigned patients.");
-    }
-}
-
-   public void viewAppointments() {
-
-    System.out.println("===== My Appointments =====");
-
-    if (appointmentCount == 0) {
-
-        System.out.println("No appointments.");
         return;
     }
 
     for (int i = 0; i < appointmentCount; i++) {
 
-        appointments[i].displayAppointment();
+        if (appointments[i].getDate()
+                .equals(appointment.getDate())
+                &&
+            appointments[i].getTime()
+                .equals(appointment.getTime())
+                &&
+            !appointments[i].getStatus()
+                    .equalsIgnoreCase("Cancelled")) {
 
-        System.out.println();
+            System.out.println("Doctor already has appointment at this time.");
+            return;
+        }
+    }
+
+    appointments[appointmentCount++] = appointment;
+}
+
+    public void viewPatients() {
+
+    System.out.println("===== My Patients =====");
+    if (patientCount == 0) {
+        System.out.println("No assigned patients.");
+        return;
+    }
+    for (int i = 0; i < patientCount; i++) {
+        patients[i].displayInfo();
+        System.out.println("-------------------");
     }
 }
 
-    // update appointment status
+   public void viewAppointments() {
+    System.out.println("===== My Appointments =====");
+    if (appointmentCount == 0) {
+        System.out.println("No appointments.");
+        return;
+    }
+
+    for (int i = 0; i < appointmentCount; i++) {
+        appointments[i].displayAppointment();
+        System.out.println();
+    }
+}
     public void updateAppointmentStatus(String appointmentId,String newStatus) {
         for (int i = 0; i < appointmentCount; i++) {
             if (appointments[i].getAppointmentId()
                     .equals(appointmentId)) {
-
                 if (appointments[i].getStatus()
                         .equalsIgnoreCase("Cancelled")
                         && newStatus.equalsIgnoreCase("Completed")) {
-
                     System.out.println("Cancelled appointment cannot be completed.");
                     return;
                 }
-
                 if (appointments[i].getStatus()
                         .equalsIgnoreCase("Completed")
                         && newStatus.equalsIgnoreCase("Cancelled")) {

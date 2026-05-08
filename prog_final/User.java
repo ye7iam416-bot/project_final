@@ -1,4 +1,4 @@
-public  abstract class User {
+public abstract class User {
 
     protected String id;
     protected String name;
@@ -9,7 +9,7 @@ public  abstract class User {
     public User() {
     }
 
-    public User(String id, String name, String username,String password, String phone) {
+    public User(String id, String name, String username, String password, String phone) {
 
         this.id = id;
         this.name = name;
@@ -17,8 +17,7 @@ public  abstract class User {
         this.password = password;
         this.phone = phone;
     }
-
-    // Getters
+    
     public String getId() {
         return id;
     }
@@ -60,9 +59,7 @@ public  abstract class User {
         this.phone = phone;
     }
 
-    // Display
     public void displayInfo() {
-
         System.out.println("ID: " + id);
         System.out.println("Name: " + name);
         System.out.println("Username: " + username);
