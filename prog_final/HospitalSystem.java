@@ -55,7 +55,7 @@ public class HospitalSystem {
             try {
                 choice = sc.nextInt();
             } catch (Exception e) {
-                System.out.println("Invalid input.");
+                System.out.println("** Invalid input **");
                 sc.nextLine();
                 continue;
             }
@@ -86,6 +86,7 @@ public class HospitalSystem {
         System.out.print("Password: ");
         String password = sc.nextLine();
         if (admin.getUsername().equals(username)&& admin.getPassword().equals(password)) {
+            System.out.println("=> Login successful. Welcome " + admin.getName() + " !");
             adminMenu();
         } else {
             System.out.println("Invalid Login.");
@@ -93,7 +94,7 @@ public class HospitalSystem {
     }
     public void adminMenu() {
         while (true) {
-            System.out.println("\n===== Admin Menu =====");
+            System.out.println("===== Admin Menu =====");
             System.out.println("1. Add Doctor");
             System.out.println("2. Register Patient");
             System.out.println("3. Assign Patient To Doctor");
@@ -111,7 +112,7 @@ public class HospitalSystem {
             try {
                 choice = sc.nextInt();
             } catch (Exception e) {
-                System.out.println("Invalid input.");
+                System.out.println("** Invalid input **");
                 sc.nextLine();
                 continue;
             }
@@ -286,7 +287,9 @@ public class HospitalSystem {
 
         Patient patient = admin.searchPatientById(patients,patientCount,patientId);
         if (patient != null) {
+            System.out.println("--- Patient exists ---");
             patient.displayInfo();
+            System.out.println("-------------------");
         } else {
             System.out.println("Patient not found.");
         }
@@ -299,7 +302,9 @@ public class HospitalSystem {
         Doctor doctor = admin.searchDoctorById(doctors,doctorCount,doctorId);
 
         if (doctor != null) {
+            System.out.println("--- Doctor exists ---");
             doctor.displayInfo();
+            System.out.println("-------------------");
         } else {
             System.out.println("Doctor not found.");
         }
@@ -321,15 +326,16 @@ public class HospitalSystem {
             }
         }
         if (doctor == null) {
-            System.out.println("Invalid Login.");
+            System.out.println(" ** Invalid Login **.");
             return;
         }
+        System.out.println("Login successful. Welcome Dr. " + doctor.getName() + " !");
         doctorMenu(doctor);
     }
 
     public void doctorMenu(Doctor doctor) {
         while (true) {
-            System.out.println("\n===== Doctor Menu =====");
+            System.out.println("===== Doctor Menu =====");
             System.out.println("1. View My Profile");
             System.out.println("2. View Assigned Patients");
             System.out.println("3. View My Appointments");
@@ -340,7 +346,9 @@ public class HospitalSystem {
             int choice = sc.nextInt();
             switch (choice) {
                 case 1:
+                    System.out.println("---> Doctor "+ doctor.getName() + " <---");
                     doctor.displayInfo();
+                    System.out.println("-------------------");
                     break;
                 case 2:
                     doctor.viewPatients();
@@ -357,9 +365,10 @@ public class HospitalSystem {
                     doctor.updateAppointmentStatus(appointmentId,status);
                     break;
                 case 5:
+                    System.out.println("Goodbye, " + doctor.getName() + " !");
                     return;
                 default:
-                    System.out.println("Invalid choice.");
+                    System.out.println(" ** Invalid choice **.");
             }
         }
     }
@@ -378,14 +387,15 @@ public class HospitalSystem {
             }
         }
         if (patient == null) {
-            System.out.println("Invalid Login.");
+            System.out.println(" ** Invalid Login **.");
             return;
         }
+        System.out.println("Login successful. Welcome " + patient.getName() + " !");
         patientMenu(patient);
     }
     public void patientMenu(Patient patient) {
         while (true) {
-            System.out.println("\n===== Patient Menu =====");
+            System.out.println("===== Patient Menu =====");
             System.out.println("1. View My Profile");
             System.out.println("2. View Assigned Doctor");
             System.out.println("3. View My Appointments");
@@ -396,7 +406,9 @@ public class HospitalSystem {
             int choice = sc.nextInt();
             switch (choice) {
                 case 1:
+                    System.out.println("---> Patient "+ patient.getName() + " <---");
                     patient.displayInfo();
+                    System.out.println("-------------------");
                     break;
                 case 2:
                     patient.viewDoctor();
@@ -428,9 +440,10 @@ public class HospitalSystem {
                     patient.cancelAppointment(cancelId);
                     break;
                 case 6:
+                    System.out.println("Goodbye, " + patient.getName() + " !");
                     return;
                 default:
-                    System.out.println("Invalid choice.");
+                    System.out.println(" ** Invalid choice **.");
             }
         }
     }

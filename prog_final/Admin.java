@@ -113,9 +113,10 @@ public class Admin extends User {
             return;
         }
         for (int i = 0; i < count; i++) {
+            System.out.println("----- Doctor "+ (i + 1) + " -----");
             doctors[i].displayInfo();
-            System.out.println();
         }
+        System.out.println("-------------------");
     }
 
     public void viewAllPatients(Patient[] patients,int count) {
@@ -125,9 +126,10 @@ public class Admin extends User {
             return;
         }
         for (int i = 0; i < count; i++) {
+            System.out.println("----- Patient "+ (i + 1) + " -----");
             patients[i].displayInfo();
-            System.out.println();
         }
+        System.out.println("-------------------");
     }
     public void viewAllAppointments(Appointment[] appointments,int count) {
         if (count == 0) {
@@ -136,17 +138,18 @@ public class Admin extends User {
             return;
         }
         for (int i = 0; i < count; i++) {
+            System.out.println("----- Appointment "+ (i + 1) + " -----");
             if (appointments[i] != null) {
                 appointments[i].displayAppointment();
-                System.out.println();
             }
         }
+        System.out.println("-------------------");
     }
 
     public void generateReports(Doctor[] doctors,int doctorCount,Patient[] patients,
     int patientCount,Appointment[] appointments,int appointmentCount) {
-        System.out.println("\n===== SYSTEM REPORT =====");
-        System.out.println("\n--- General Statistics ---");
+        System.out.println("====> SYSTEM REPORT <====");
+        System.out.println("---> General Statistics <---");
         System.out.println("Total Doctors: "+ doctorCount);
         System.out.println("Total Patients: "+ patientCount);
         System.out.println("Total Appointments: "+ appointmentCount);
@@ -167,7 +170,7 @@ public class Admin extends User {
             }
         }
 
-        System.out.println("\n--- Appointment Status ---");
+        System.out.println("---> Appointment Status <---");
         System.out.println("Confirmed: " + confirmed);
         System.out.println("Completed: " + completed);
         System.out.println("Cancelled: " + cancelled);
@@ -185,7 +188,7 @@ public class Admin extends User {
             }
         }
 
-        System.out.println("\n--- Top 3 Doctors ---");
+        System.out.println("---> Top 3 Doctors <---");
         for (int k = 0; k < 3; k++) {
             int maxIndex = -1;
             int maxValue = -1;
@@ -203,5 +206,7 @@ public class Admin extends User {
 
             doctorAppointments[maxIndex] = -1;
         }
+        System.out.println("===== END OF REPORT =====");
+        System.out.println("-------------------");
     }
 }

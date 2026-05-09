@@ -72,9 +72,6 @@ public class Patient extends User {
 
     @Override
     public void displayInfo() {
-
-        System.out.println("===== Patient Info =====");
-
         System.out.println("Patient ID: " + id);
         System.out.println("Name: " + name);
         System.out.println("Username: " + username);
@@ -94,8 +91,9 @@ public class Patient extends User {
             System.out.println("No doctor assigned.");
             return;
         }
-        System.out.println("===== Assigned Doctor =====");
+        System.out.println("====> Assigned Doctor <====");
         assignedDoctor.displayInfo();
+        System.out.println("-------------------");
     }
 
     public boolean addAppointment(Appointment appointment) {
@@ -143,17 +141,18 @@ public class Patient extends User {
         assignedDoctor.addAppointment(appointment);
         allAppointments[allAppointmentCount++] = appointment;
         System.out.println("Appointment booked successfully.");
-       return allAppointmentCount;
+        System.out.println("-------------------");
+        return allAppointmentCount;
     }
     public void viewAppointments() {
-        System.out.println("===== My Appointments =====");
+        System.out.println("====> My Appointments <====");
         if (appointmentCount == 0) {
             System.out.println("No appointments.");
             return;
         }
         for (int i = 0; i < appointmentCount; i++) {
             appointments[i].displayAppointment();
-            System.out.println();
+            System.out.println("-------------------");
         }
     }
     public void cancelAppointment(String appointmentId) {

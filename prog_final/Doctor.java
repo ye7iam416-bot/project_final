@@ -39,9 +39,6 @@ public class Doctor extends User {
     }
 
     public void displayInfo() {
-
-        System.out.println("===== Doctor Info =====");
-
         System.out.println("Doctor ID: " + id);
         System.out.println("Name: " + name);
         System.out.println("Username: " + username);
@@ -112,7 +109,7 @@ public void addAppointment(Appointment appointment) {
 
     for (int i = 0; i < appointmentCount; i++) {
         appointments[i].displayAppointment();
-        System.out.println();
+        System.out.println("-------------------");
     }
 }
     public void updateAppointmentStatus(String appointmentId,String newStatus) {

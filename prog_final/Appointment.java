@@ -90,7 +90,6 @@ String time, String status) {
         this.status = status;
     }
     public void displayAppointment() {
-        System.out.println("===== Appointment =====");
         System.out.println("Appointment ID: " + appointmentId);
         System.out.println("Patient ID: " + patientId);
         System.out.println("Doctor ID: " + doctorId);
